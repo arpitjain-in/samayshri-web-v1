@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e8e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d5d5d5;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg2)"/>
+  
+  <!-- Large silo -->
+  <ellipse cx="300" cy="200" rx="80" ry="30" fill="#bbb" stroke="#888" stroke-width="2"/>
+  <rect x="220" y="200" width="160" height="300" fill="#ccc" stroke="#888" stroke-width="2"/>
+  <ellipse cx="300" cy="500" rx="80" ry="30" fill="#aaa" stroke="#888" stroke-width="2"/>
+  
+  <!-- Second silo -->
+  <ellipse cx="500" cy="250" rx="60" ry="25" fill="#bbb" stroke="#888" stroke-width="2"/>
+  <rect x="440" y="250" width="120" height="250" fill="#ccc" stroke="#888" stroke-width="2"/>
+  <ellipse cx="500" cy="500" rx="60" ry="25" fill="#aaa" stroke="#888" stroke-width="2"/>
+  
+  <!-- Dust collection cone -->
+  <path d="M 600 150 L 700 150 L 680 350 L 620 350 Z" fill="#d4d4d4" stroke="#999" stroke-width="2"/>
+  <rect x="630" y="350" width="40" height="100" fill="#bbb" stroke="#888" stroke-width="2"/>
+  
+  <!-- Connecting pipes -->
+  <rect x="370" y="300" width="80" height="20" fill="#999" stroke="#666" stroke-width="1"/>
+  <rect x="550" y="350" width="80" height="20" fill="#999" stroke="#666" stroke-width="1"/>
+  
+  <!-- Text -->
+  <text x="400" y="550" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#666" text-anchor="middle">
+    Storage &amp; Dust Collection - Plant 2
+  </text>
+</svg>

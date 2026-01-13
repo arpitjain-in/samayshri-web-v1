@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ebebeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d0d0d0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="yellowGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f1b70a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="600" fill="url(#bg4)"/>
+  
+  <!-- Building structure -->
+  <rect x="50" y="80" width="700" height="420" fill="#d5d5d5" stroke="#999" stroke-width="3"/>
+  
+  <!-- Roof beams -->
+  <line x1="50" y1="80" x2="400" y2="40" stroke="#888" stroke-width="4"/>
+  <line x1="750" y1="80" x2="400" y2="40" stroke="#888" stroke-width="4"/>
+  
+  <!-- Windows -->
+  <rect x="80" y="120" width="60" height="80" fill="#b0c4de" stroke="#666" stroke-width="2"/>
+  <rect x="180" y="120" width="60" height="80" fill="#b0c4de" stroke="#666" stroke-width="2"/>
+  
+  <!-- Production line equipment -->
+  <path d="M 300 200 L 340 200 L 355 280 L 285 280 Z" fill="url(#yellowGrad3)" stroke="#d4a506" stroke-width="2"/>
+  <rect x="275" y="280" width="80" height="100" fill="#bbb" stroke="#888" stroke-width="2"/>
+  
+  <path d="M 420 200 L 460 200 L 475 280 L 405 280 Z" fill="url(#yellowGrad3)" stroke="#d4a506" stroke-width="2"/>
+  <rect x="395" y="280" width="80" height="100" fill="#bbb" stroke="#888" stroke-width="2"/>
+  
+  <!-- Storage silos on right -->
+  <ellipse cx="600" cy="200" rx="50" ry="20" fill="#bbb" stroke="#888" stroke-width="2"/>
+  <rect x="550" y="200" width="100" height="200" fill="#ccc" stroke="#888" stroke-width="2"/>
+  <ellipse cx="600" cy="400" rx="50" ry="20" fill="#aaa" stroke="#888" stroke-width="2"/>
+  
+  <!-- Conveyor belt -->
+  <rect x="100" y="350" width="500" height="30" fill="#888" stroke="#666" stroke-width="2"/>
+  <circle cx="150" cy="365" r="12" fill="#666"/>
+  <circle cx="250" cy="365" r="12" fill="#666"/>
+  <circle cx="350" cy="365" r="12" fill="#666"/>
+  <circle cx="450" cy="365" r="12" fill="#666"/>
+  <circle cx="550" cy="365" r="12" fill="#666"/>
+  
+  <!-- Floor -->
+  <rect x="50" y="450" width="700" height="50" fill="#aaa" stroke="#888" stroke-width="2"/>
+  
+  <!-- Text -->
+  <text x="400" y="550" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#666" text-anchor="middle">
+    Complete Production Line - Plant 4
+  </text>
+</svg>
