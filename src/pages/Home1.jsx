@@ -47,6 +47,16 @@ const carouselData = [
 export default function Home1() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -72,26 +82,23 @@ export default function Home1() {
   };
 
   const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
+    enter: {
       opacity: 0
-    }),
+    },
     center: {
       zIndex: 1,
-      x: 0,
       opacity: 1
     },
-    exit: (direction) => ({
+    exit: {
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
       opacity: 0
-    })
+    }
   };
 
   return (
-    <div className="pt-16">
+    <div>
       {/* Carousel Section */}
-      <section className="relative h-[55vh] overflow-hidden flex items-center">
+      <section className="relative min-h-[70vh] md:min-h-[75vh] lg:h-[55vh] overflow-hidden flex items-center mt-16 md:mt-20 pb-8 md:pb-12">
         {/* Agricultural Background Pattern */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0" style={{
@@ -111,7 +118,7 @@ export default function Home1() {
           {/* Left wheat stalks */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 0.15, y: 0 }}
+            animate={isMobile ? { opacity: 0, y: 50 } : { opacity: 0.15, y: 0 }}
             transition={{ duration: 1.5 }}
             className="absolute -left-10 top-0 w-80 h-full"
           >
@@ -128,7 +135,7 @@ export default function Home1() {
           {/* Right wheat stalks */}
           <motion.div
             initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 0.12, y: 0 }}
+            animate={isMobile ? { opacity: 0, y: -50 } : { opacity: 0.12, y: 0 }}
             transition={{ duration: 1.5, delay: 0.2 }}
             className="absolute -right-10 top-0 w-80 h-full"
           >
@@ -162,52 +169,41 @@ export default function Home1() {
         
         {/* Animated Gradient Orbs - Agricultural theme */}
         <motion.div
-          animate={{ scale: [1, 1.2, 1], opacity: [0.15, 0.2, 0.15] }}
+          animate={isMobile ? { scale: 1, opacity: 0 } : { scale: [1, 1.2, 1], opacity: [0.15, 0.2, 0.15] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-amber-400 rounded-full blur-3xl"
         ></motion.div>
         
         <motion.div
-          animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.15, 0.1] }}
+          animate={isMobile ? { scale: 1, opacity: 0 } : { scale: [1, 1.3, 1], opacity: [0.1, 0.15, 0.1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute left-0 bottom-20 w-[400px] h-[400px] bg-yellow-300 rounded-full blur-3xl"
         ></motion.div>
         
         <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.08, 0.12, 0.08] }}
+          animate={isMobile ? { scale: 1, opacity: 0 } : { scale: [1, 1.1, 1], opacity: [0.08, 0.12, 0.08] }}
           transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
           className="absolute right-1/3 bottom-1/4 w-[350px] h-[350px] bg-green-300 rounded-full blur-3xl"
         ></motion.div>
 
-        <AnimatePresence initial={false} custom={direction}>
+        <AnimatePresence initial={false} mode="wait">
           <motion.div
             key={currentSlide}
-            custom={direction}
             variants={slideVariants}
             initial="enter"
             animate="center"
             exit="exit"
             transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 }
+              opacity: { duration: 0.3 }
             }}
-            className="absolute inset-0 w-full h-full"
+            className="w-full h-full"
           >
             <div className="h-full flex items-center">
-              <div className="container-custom">
+              <div className="container-custom w-full">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
                   {/* Left Content */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="space-y-3 lg:space-y-4 z-10"
-                  >
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
+                  <div className="space-y-3 lg:space-y-4 z-10 order-2 lg:order-1">
+                  <div>
                     <span className="inline-block px-4 py-2 bg-brand-100 text-brand-700 rounded-full text-xs md:text-sm font-semibold mb-2">
                       {carouselData[currentSlide].subtitleHindi} • {carouselData[currentSlide].subtitle}
                     </span>
@@ -217,28 +213,18 @@ export default function Home1() {
                     <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold text-brand-600 leading-tight">
                       {carouselData[currentSlide].title}
                     </h2>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="space-y-2"
-                  >
+                  <div className="space-y-2">
                     <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed">
                       {carouselData[currentSlide].descriptionHindi}
                     </p>
                     <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed">
                       {carouselData[currentSlide].description}
                     </p>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="flex flex-wrap gap-3"
-                  >
+                  <div className="flex flex-wrap gap-3">
                     {carouselData[currentSlide].highlightsHindi.map((highlight, index) => (
                       <div
                         key={index}
@@ -251,29 +237,21 @@ export default function Home1() {
                         <span className="text-gray-600 text-xs ml-4">{carouselData[currentSlide].highlights[index]}</span>
                       </div>
                     ))}
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                    className="flex flex-col sm:flex-row gap-3 pt-1"
-                  >
+                  <div className="flex flex-col sm:flex-row gap-3 pt-1">
                     <button className="px-6 py-3 lg:px-8 lg:py-4 bg-brand-600 text-white rounded-lg font-semibold hover:bg-brand-700 transition-all transform hover:scale-105 shadow-lg text-sm lg:text-base">
                       उत्पाद देखें • Explore Products
                     </button>
                     <button className="px-6 py-3 lg:px-8 lg:py-4 bg-white/90 backdrop-blur-sm text-brand-600 border-2 border-brand-600 rounded-lg font-semibold hover:bg-brand-50 transition-all text-sm lg:text-base">
                       और जानें • Learn More
                     </button>
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
 
                 {/* Right Image with Curve Shape */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="relative h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center"
+                  className="relative h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center order-1 lg:order-2"
                 >
                   {/* Decorative Background Curve */}
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -293,7 +271,6 @@ export default function Home1() {
                         <path
                           d="M100,20 C140,20 170,40 180,80 C190,120 180,160 150,175 C120,190 80,190 50,175 C20,160 10,120 20,80 C30,40 60,20 100,20 Z"
                           fill={`url(#gradient-${currentSlide})`}
-                          className="animate-pulse-slow"
                         />
                       </svg>
                     </div>
@@ -303,9 +280,6 @@ export default function Home1() {
                   <div className="relative z-10 w-[450px] h-[450px] lg:w-[550px] lg:h-[550px]">
                     <div
                       className="w-full h-full rounded-[40%_60%_60%_40%/40%_50%_50%_60%] overflow-hidden shadow-2xl border-4 border-brand-100"
-                      style={{
-                        animation: 'morph 8s ease-in-out infinite',
-                      }}
                     >
                       <img
                         src={carouselData[currentSlide].image}
@@ -314,32 +288,6 @@ export default function Home1() {
                       />
                     </div>
                   </div>
-
-                  {/* Floating Elements */}
-                  <motion.div
-                    animate={{
-                      y: [0, -20, 0],
-                      rotate: [0, 5, 0]
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="absolute top-10 right-10 w-20 h-20 bg-brand-200 rounded-full opacity-50 blur-xl"
-                  />
-                  <motion.div
-                    animate={{
-                      y: [0, 20, 0],
-                      rotate: [0, -5, 0]
-                    }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="absolute bottom-20 left-10 w-16 h-16 bg-brand-300 rounded-full opacity-40 blur-xl"
-                  />
                 </motion.div>
                 </div>
               </div>
@@ -349,14 +297,14 @@ export default function Home1() {
         {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110"
+          className="absolute left-4 lg:left-8 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110 hidden lg:flex items-center justify-center"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-6 h-6 text-gray-800" />
         </button>
         <button
           onClick={nextSlide}
-          className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110"
+          className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110 hidden lg:flex items-center justify-center"
           aria-label="Next slide"
         >
           <ChevronRight className="w-6 h-6 text-gray-800" />

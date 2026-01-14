@@ -10,8 +10,8 @@ export const companyInfo = {
     full: 'Daulat Baug, AB Road, Bharsula Chauraha, Raghogarh, Distt- Guna, MP, India',
   },
   contact: {
-    phone: '+91 XXXXX XXXXX',
-    email: 'info@samayshriagro.com',
+    phone: '+91 89899-06777',
+    email: 'customercare@samayshri.com',
     whatsapp: '+91 XXXXX XXXXX',
   },
   social: {
