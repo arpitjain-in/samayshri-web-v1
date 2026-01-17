@@ -136,50 +136,44 @@ function ProductCard({ product, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="card group hover:scale-105 transition-transform duration-300"
+      className="card hover:scale-105 transition-transform duration-300 p-4"
     >
-      {/* Product Image Placeholder */}
-      <div className="aspect-square bg-gradient-to-br from-brand-100 to-brand-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
-        <Package className="w-24 h-24 text-brand-400" />
-        <div className="absolute top-3 right-3 bg-brand-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+      {/* Product Image */}
+      <div className="aspect-square bg-gradient-to-br from-brand-100 to-brand-200 rounded-lg mb-3 flex items-center justify-center overflow-hidden relative">
+        <img 
+          src={product.image} 
+          alt={product.name}
+          className="w-full h-full object-contain p-2"
+        />
+        <div className="absolute top-2 right-2 bg-brand-600 text-white px-2 py-0.5 rounded-full text-xs font-semibold">
           {product.category}
         </div>
       </div>
 
       {/* Product Info */}
-      <div className="mb-4">
-        <h3 className="text-xl font-bold text-gray-900 mb-1">
+      <div className="mb-3">
+        <h3 className="text-lg font-bold text-gray-900 mb-1">
           {product.name}
         </h3>
-        <div className="flex items-center justify-between text-sm text-gray-600 mb-3">
+        <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
           <span className="font-semibold">{product.size}</span>
           <span className="text-brand-600">• {product.packaging}</span>
         </div>
-        <p className="text-gray-600 text-sm mb-4">
+        <p className="text-gray-600 text-xs mb-2 line-clamp-2">
           {product.description}
         </p>
       </div>
 
       {/* Features */}
-      <div className="border-t border-gray-200 pt-4">
-        <div className="grid grid-cols-2 gap-2">
-          {product.features.map((feature, idx) => (
+      <div className="border-t border-gray-200 pt-2">
+        <div className="grid grid-cols-2 gap-1">
+          {product.features.slice(0, 2).map((feature, idx) => (
             <div key={idx} className="flex items-start text-xs text-gray-700">
               <CheckCircle2 className="w-3 h-3 text-brand-600 mr-1 flex-shrink-0 mt-0.5" />
               <span>{feature}</span>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* CTA Button */}
-      <div className="mt-6">
-        <Link
-          to="/contact"
-          className="block w-full text-center px-4 py-3 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-700 transition-colors"
-        >
-          Enquire Now
-        </Link>
       </div>
     </motion.div>
   );

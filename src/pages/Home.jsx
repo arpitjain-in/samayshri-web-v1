@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import {
   ArrowRight,
   Building2,
@@ -11,13 +12,111 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedCounter from "../components/AnimatedCounter";
+import ProductModal from "../components/ProductModal";
 import { companyInfo } from "../data/company";
 import attaChakkiImg from "../assets/atta-chakki.png";
 import besanImg from "../assets/besan.png";
 import daliyaImg from "../assets/daliya.png";
 import Home1 from "./Home1";
 
+const productData = {
+  atta: {
+    name: "Chakki Atta",
+    category: "Whole Wheat Flour",
+    color: "#dc2626",
+    gradientStart: "#fee2e2",
+    gradientEnd: "#fecaca",
+    description: "Samayshri's Shikharji Chakki Atta is a premium whole wheat flour crafted using traditional stone-grinding methods combined with modern technology. Each grain is carefully processed to preserve nutrients and natural flavors.",
+    features: [
+      "100% Pure Whole Wheat",
+      "Cold Stone-Ground Process",
+      "High in Fiber & Protein",
+      "No Additives or Preservatives",
+      "Rich in Essential Minerals",
+      "Maintains Natural Nutrients"
+    ],
+    benefits: [
+      "Aids in digestion and promotes gut health",
+      "Helps regulate blood sugar levels",
+      "Rich source of B vitamins and minerals",
+      "Supports heart health with high fiber content",
+      "Keeps you fuller for longer",
+      "Promotes sustained energy throughout the day"
+    ],
+    sizes: "5 kg, 10 kg, 25 kg bulk packs",
+    usage: "Perfect for making traditional Indian breads, rotis, parathas, and everyday baking. Use 1-2 cups per day for a nutritious diet.",
+    storage: "Store in an airtight container in a cool, dry place. Keep away from moisture and direct sunlight. Best consumed within 6 months of purchase."
+  },
+  daliya: {
+    name: "Daliya",
+    category: "Cracked Wheat",
+    color: "#16a34a",
+    gradientStart: "#f0fdf4",
+    gradientEnd: "#dcfce7",
+    description: "Samayshri's Daliya is premium cracked wheat that combines quick cooking convenience with nutritional excellence. Ideal for a wholesome breakfast or light dinner.",
+    features: [
+      "100% Natural Cracked Wheat",
+      "Rich in Dietary Fiber",
+      "Quick Cooking (15-20 minutes)",
+      "Nutrient-Dense & Wholesome",
+      "No Artificial Processing",
+      "Perfect for Modern Kitchens"
+    ],
+    benefits: [
+      "Excellent source of complex carbohydrates",
+      "Promotes digestive health",
+      "Low glycemic index for better blood sugar control",
+      "Rich in antioxidants and minerals",
+      "Helps maintain healthy cholesterol levels",
+      "Provides sustained energy without spikes"
+    ],
+    sizes: "500g, 1 kg, 5 kg packs",
+    usage: "Prepare as a porridge by boiling with water or milk. Mix with vegetables, spices, and ghee for a traditional Indian breakfast. Can also be used in soups and salads.",
+    storage: "Keep in an airtight, moisture-proof container in a cool place. Store away from pests and strong odors. Remains fresh for 8-10 months."
+  },
+  besan: {
+    name: "Besan",
+    category: "Gram Flour",
+    color: "#d97706",
+    gradientStart: "#fef3c7",
+    gradientEnd: "#fde68a",
+    description: "Samayshri's Besan is 100% pure gram flour - finely ground chickpeas with exceptional purity and texture. A versatile ingredient for cooking and skincare.",
+    features: [
+      "100% Pure Chickpea Flour",
+      "Ultra-Fine Texture",
+      "High Protein Content",
+      "No Fillers or Extenders",
+      "Premium Grade Quality",
+      "Naturally Gluten-Free"
+    ],
+    benefits: [
+      "Excellent plant-based protein source",
+      "Rich in fiber for digestive health",
+      "Supports muscle building and repair",
+      "Low glycemic index for stable energy",
+      "Contains essential amino acids",
+      "Great for skin health when used externally"
+    ],
+    sizes: "500g, 1 kg, 5 kg packs",
+    usage: "Use for making pakoras, bhajias, chikhalwali, and traditional sweets. Mix with water to create a natural face mask for glowing skin. Ideal for vegetarian cooking.",
+    storage: "Store in an airtight container in a cool, dry environment. Keep away from humidity and direct heat. Lasts up to 10-12 months when stored properly."
+  }
+};
+
 export default function Home() {
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openProductModal = (product) => {
+    setSelectedProduct(product);
+    setIsModalOpen(true);
+  };
+
+  const closeProductModal = () => {
+    setIsModalOpen(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <div className="pt-16">
       {/* Hero Section */}
@@ -142,6 +241,7 @@ export default function Home() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => openProductModal(productData.atta)}
                       className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors font-semibold"
                     >
                       Learn More
@@ -237,6 +337,7 @@ export default function Home() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => openProductModal(productData.daliya)}
                       className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold"
                     >
                       Learn More
@@ -335,6 +436,7 @@ export default function Home() {
                     <motion.button
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => openProductModal(productData.besan)}
                       className="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors font-semibold"
                     >
                       Learn More
@@ -518,6 +620,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <ProductModal 
+        isOpen={isModalOpen} 
+        product={selectedProduct} 
+        onClose={closeProductModal} 
+      />
     </div>
   );
 }

@@ -98,7 +98,7 @@ export default function Home1() {
   return (
     <div>
       {/* Carousel Section */}
-      <section className="relative min-h-[70vh] md:min-h-[75vh] lg:h-[55vh] overflow-hidden flex items-center mt-16 md:mt-20 pb-8 md:pb-12">
+      <section className="relative min-h-auto md:min-h-[75vh] lg:h-[55vh] overflow-hidden flex items-center mt-8 md:mt-20 pb-20 md:pb-24">
         {/* Agricultural Background Pattern */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0" style={{
@@ -200,91 +200,68 @@ export default function Home1() {
           >
             <div className="h-full flex items-center">
               <div className="container-custom w-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-6 lg:gap-12 items-center">
                   {/* Left Content */}
-                  <div className="space-y-3 lg:space-y-4 z-10 order-2 lg:order-1">
+                  <div className="space-y-2 md:space-y-3 lg:space-y-4 z-10 order-2 lg:order-1">
                   <div>
                     <span className="inline-block px-4 py-2 bg-brand-100 text-brand-700 rounded-full text-xs md:text-sm font-semibold mb-2">
                       {carouselData[currentSlide].subtitleHindi} • {carouselData[currentSlide].subtitle}
                     </span>
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight mb-1.5">
+                    <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight mb-1">
                       {carouselData[currentSlide].titleHindi}
                     </h1>
-                    <h2 className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold text-brand-600 leading-tight">
+                    <h2 className="text-lg md:text-3xl lg:text-4xl xl:text-5xl font-semibold text-brand-600 leading-tight">
                       {carouselData[currentSlide].title}
                     </h2>
                   </div>
 
-                  <div className="space-y-2">
-                    <p className="text-base md:text-lg lg:text-xl text-gray-700 leading-relaxed">
+                  <div className="space-y-1 md:space-y-2">
+                    <p className="text-xs md:text-lg lg:text-xl text-gray-700 leading-relaxed">
                       {carouselData[currentSlide].descriptionHindi}
                     </p>
-                    <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed">
+                    <p className="text-xs md:text-base lg:text-lg text-gray-600 leading-relaxed">
                       {carouselData[currentSlide].description}
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2 md:gap-3">
                     {carouselData[currentSlide].highlightsHindi.map((highlight, index) => (
                       <div
                         key={index}
-                        className="flex flex-col items-start bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg shadow-sm border border-brand-100"
+                        className="flex flex-col items-start bg-white/90 backdrop-blur-sm px-2 py-1 md:px-3 md:py-2 rounded-lg shadow-sm border border-brand-100"
                       >
-                        <div className="flex items-center space-x-2 mb-0.5">
-                          <div className="w-2 h-2 bg-brand-600 rounded-full"></div>
+                        <div className="flex items-center space-x-1.5 mb-0">
+                          <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-brand-600 rounded-full"></div>
                           <span className="text-gray-800 font-semibold text-xs md:text-sm">{highlight}</span>
                         </div>
-                        <span className="text-gray-600 text-xs ml-4">{carouselData[currentSlide].highlights[index]}</span>
+                        <span className="text-gray-600 text-xs md:text-xs ml-3 md:ml-4">{carouselData[currentSlide].highlights[index]}</span>
                       </div>
                     ))}
                   </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3 pt-1">
-                    <button className="px-6 py-3 lg:px-8 lg:py-4 bg-brand-600 text-white rounded-lg font-semibold hover:bg-brand-700 transition-all transform hover:scale-105 shadow-lg text-sm lg:text-base">
+                  {/* <div className="flex flex-col sm:flex-row gap-2 md:gap-3 pt-1 pb-16 md:pb-0">
+                    <button className="px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-brand-600 text-white rounded-lg font-semibold hover:bg-brand-700 transition-all transform hover:scale-105 shadow-lg text-xs md:text-sm lg:text-base">
                       उत्पाद देखें • Explore Products
                     </button>
-                    <button className="px-6 py-3 lg:px-8 lg:py-4 bg-white/90 backdrop-blur-sm text-brand-600 border-2 border-brand-600 rounded-lg font-semibold hover:bg-brand-50 transition-all text-sm lg:text-base">
+                    <button className="px-4 py-2 md:px-6 md:py-3 lg:px-8 lg:py-4 bg-white/90 backdrop-blur-sm text-brand-600 border-2 border-brand-600 rounded-lg font-semibold hover:bg-brand-50 transition-all text-xs md:text-sm lg:text-base">
                       और जानें • Learn More
                     </button>
-                  </div>
+                  </div> */}
                 </div>
 
-                {/* Right Image with Curve Shape */}
+                {/* Right Image */}
                 <motion.div
-                  className="relative h-[400px] md:h-[500px] lg:h-[550px] flex items-center justify-center order-1 lg:order-2"
+                  className="relative h-[250px] md:h-[500px] lg:h-[550px] flex items-center justify-center order-1 lg:order-2 my-4 md:my-0"
                 >
-                  {/* Decorative Background Curve */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-[420px] h-[420px] lg:w-[520px] lg:h-[520px]">
-                      <svg
-                        viewBox="0 0 200 200"
-                        className="w-full h-full absolute inset-0"
-                        style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.15))' }}
-                      >
-                        <defs>
-                          <linearGradient id={`gradient-${currentSlide}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style={{ stopColor: '#3b82f6', stopOpacity: 0.7 }} />
-                            <stop offset="50%" style={{ stopColor: '#8b5cf6', stopOpacity: 0.6 }} />
-                            <stop offset="100%" style={{ stopColor: '#6366f1', stopOpacity: 0.7 }} />
-                          </linearGradient>
-                        </defs>
-                        <path
-                          d="M100,20 C140,20 170,40 180,80 C190,120 180,160 150,175 C120,190 80,190 50,175 C20,160 10,120 20,80 C30,40 60,20 100,20 Z"
-                          fill={`url(#gradient-${currentSlide})`}
-                        />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Image Container with rounded shape */}
-                  <div className="relative z-10 w-[450px] h-[450px] lg:w-[550px] lg:h-[550px]">
+                  {/* Image Container */}
+                  <div className="relative z-10 w-[280px] h-[280px] md:w-[450px] md:h-[450px] lg:w-[550px] lg:h-[550px]">
                     <div
-                      className="w-full h-full rounded-[40%_60%_60%_40%/40%_50%_50%_60%] overflow-hidden shadow-2xl border-4 border-brand-100"
+                      className="w-full h-full overflow-hidden shadow-2xl border-4 border-brand-100"
                     >
                       <img
                         src={carouselData[currentSlide].image}
                         alt={carouselData[currentSlide].title}
-                        className="w-full h-full object-contain p-6 bg-gradient-to-br from-gray-50 to-gray-100"
+                        className="w-full h-full object-contain p-2 md:p-6 bg-gradient-to-br from-gray-50 to-gray-100"
                       />
                     </div>
                   </div>
