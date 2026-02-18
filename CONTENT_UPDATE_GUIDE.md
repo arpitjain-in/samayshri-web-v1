@@ -111,7 +111,7 @@ Find the product and change any value:
 ```javascript
 {
   id: 1,
-  name: 'Premium Chakki Atta',  // ← Change this
+  name: 'Whole Wheat Chakki Atta',  // ← Change this
   size: '10 kg',  // ← or this
   // ...
 }

@@ -235,8 +235,8 @@ export default function Home() {
                     )}
                   </ul>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-gray-900">
-                      5 kg
+                    <span className="text-xl font-bold text-gray-900">
+                      5kg | 10kg | 26kg
                     </span>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -331,8 +331,8 @@ export default function Home() {
                     )}
                   </ul>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-gray-900">
-                      500g - 1kg
+                    <span className="text-xl font-bold text-gray-900">
+                      500g | 1kg
                     </span>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -430,8 +430,8 @@ export default function Home() {
                     )}
                   </ul>
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-gray-900">
-                      500g - 1kg
+                    <span className="text-xl font-bold text-gray-900">
+                      500g | 1kg | 40kg
                     </span>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
