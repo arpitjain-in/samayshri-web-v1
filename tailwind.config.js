@@ -41,6 +41,7 @@ export default {
         'slide-up': 'slideUp 0.6s ease-out',
         'scale-in': 'scaleIn 0.5s ease-out',
         'counter': 'counter 2s ease-out',
+        'colorful-border': 'colorfulBorder 4s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -54,6 +55,13 @@ export default {
         scaleIn: {
           '0%': { transform: 'scale(0.9)', opacity: '0' },
           '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        colorfulBorder: {
+          '0%': { backgroundImage: 'linear-gradient(90deg, #d59105, #f1b70a, #f7c527, #f9d354, #d59105)' },
+          '25%': { backgroundImage: 'linear-gradient(90deg, #f1b70a, #f7c527, #f9d354, #fbe28c, #f1b70a)' },
+          '50%': { backgroundImage: 'linear-gradient(90deg, #f7c527, #f9d354, #fbe28c, #fdefc4, #f7c527)' },
+          '75%': { backgroundImage: 'linear-gradient(90deg, #f9d354, #fbe28c, #fdefc4, #d59105, #f9d354)' },
+          '100%': { backgroundImage: 'linear-gradient(90deg, #d59105, #f1b70a, #f7c527, #f9d354, #d59105)' },
         },
       },
     },

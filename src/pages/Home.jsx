@@ -9,6 +9,10 @@ import {
   Package,
   Sparkles,
   Factory,
+  Award,
+  Lock,
+  BadgeCheck,
+  Barcode,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AnimatedCounter from "../components/AnimatedCounter";
@@ -589,6 +593,82 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Compliance & Certifications Section */}
+      <section className="section-padding bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="container-custom">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Certified & Compliant
+            </h2>
+            <p className="text-lg text-gray-600">
+              Meeting the highest standards of quality, safety, and regulatory compliance
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            {[
+              {
+                icon: Award,
+                title: "FSSAI Central License",
+                description: "Food Safety Standards Authority of India certified for complete food safety compliance",
+                color: "from-blue-500 to-blue-600",
+              },
+              {
+                icon: Lock,
+                title: "Trademart Safe",
+                description: "ISO-certified quality assurance and product safety standards",
+                color: "from-emerald-500 to-emerald-600",
+              },
+              {
+                icon: BadgeCheck,
+                title: "ISO 2018 Compliant",
+                description: "Adhering to international standards for manufacturing excellence",
+                color: "from-orange-500 to-orange-600",
+              },
+              {
+                icon: Barcode,
+                title: "GS1 Barcode",
+                description: "Global product identification and traceability standards implemented",
+                color: "from-purple-500 to-purple-600",
+              },
+            ].map((cert, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100"
+              >
+                <div
+                  className={`w-16 h-16 bg-gradient-to-br ${cert.color} rounded-xl flex items-center justify-center mb-4 mx-auto`}
+                >
+                  <cert.icon className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-3 text-center">
+                  {cert.title}
+                </h3>
+                <p className="text-gray-600 text-center text-sm">
+                  {cert.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center mt-12"
+          >
+            <p className="text-lg text-gray-700 font-medium">
+              ✓ All certifications and licenses are regularly audited and maintained to ensure continuous compliance
+            </p>
+          </motion.div>
         </div>
       </section>
 

@@ -153,13 +153,15 @@ export default function Home1() {
                       className="flex justify-center items-center w-full"
                     >
                       <div className="w-full max-w-sm">
-                        <div className="relative bg-white rounded-xl shadow-lg border-2 border-brand-100 overflow-hidden">
-                          <div className="aspect-square flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-gray-100">
-                            <img
-                              src={carouselData[currentSlide].image}
-                              alt={carouselData[currentSlide].title}
-                              className="w-full h-full object-contain"
-                            />
+                        <div className="relative animate-colorful-border bg-gradient-to-r from-brand-600 via-brand-400 to-brand-600 rounded-xl p-1 shadow-lg">
+                          <div className="relative bg-white rounded-lg overflow-hidden">
+                            <div className="aspect-square flex items-center justify-center p-4 bg-gradient-to-br from-gray-50 to-gray-100">
+                              <img
+                                src={carouselData[currentSlide].image}
+                                alt={carouselData[currentSlide].title}
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -276,12 +278,14 @@ export default function Home1() {
                       className="flex justify-center items-center order-1 lg:order-2"
                     >
                       <div className="relative w-full max-w-md xl:max-w-lg aspect-square">
-                        <div className="w-full h-full bg-white rounded-2xl shadow-2xl border-4 border-brand-100 overflow-hidden flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100">
-                          <img
-                            src={carouselData[currentSlide].image}
-                            alt={carouselData[currentSlide].title}
-                            className="w-full h-full object-contain"
-                          />
+                        <div className="w-full h-full animate-colorful-border bg-gradient-to-r from-brand-600 via-brand-400 to-brand-600 rounded-2xl p-1.5 shadow-2xl">
+                          <div className="w-full h-full bg-white rounded-[15px] overflow-hidden flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100">
+                            <img
+                              src={carouselData[currentSlide].image}
+                              alt={carouselData[currentSlide].title}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
                         </div>
                       </div>
                     </motion.div>
