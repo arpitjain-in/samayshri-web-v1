@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
 import toast from 'react-hot-toast';
 import { MapPin, Phone, Mail, Calendar, Users, Send, CheckCircle } from 'lucide-react';
 import SectionTitle from '../components/SectionTitle';
@@ -37,21 +35,37 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      // Add to Firestore
-      await addDoc(collection(db, 'visits'), {
-        ...data,
-        status: 'pending',
-        createdAt: serverTimestamp(),
+      const formData = new FormData();
+      formData.append('access_key', '312cddf2-0d46-4b8b-8ebd-fc9943351675');
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('visitDate', data.visitDate);
+      formData.append('numberOfVisitors', data.numberOfVisitors);
+      if (data.message) {
+        formData.append('message', data.message);
+      }
+      formData.append('subject', 'New Visit Request from Samayshri Website');
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
       });
 
-      toast.success('Visit request submitted successfully! We will contact you soon.');
-      setIsSubmitted(true);
-      reset();
+      const result = await response.json();
 
-      // Reset success message after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
+      if (result.success) {
+        toast.success('Visit request submitted successfully! We will contact you soon.');
+        setIsSubmitted(true);
+        reset();
+
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Failed to submit request. Please try again or contact us directly.');
