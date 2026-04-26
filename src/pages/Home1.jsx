@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Globe, Phone } from 'lucide-react';
 import attaChakkiImg from '../assets/atta-chakki.png';
 import plantImg from '../assets/plant.png';
 import productImg from '../assets/product.png';
 import logoImg from '../assets/Shikharji- Full Logo.png';
+import { companyInfo } from '../data/company';
 
 const carouselData = [
   {
@@ -65,6 +66,8 @@ export default function Home1() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const websiteUrl = 'https://www.samayshri.com';
+  const websiteLabel = 'www.samayshri.com';
 
   useEffect(() => {
     const checkMobile = () => {
@@ -114,6 +117,29 @@ export default function Home1() {
 
   return (
     <div>
+      <div className="container-custom pt-4">
+        <div className="rounded-xl border border-brand-200 bg-gradient-to-r from-brand-50 via-amber-50 to-brand-50 px-4 py-3 shadow-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
+            <a
+              href={`tel:${companyInfo.contact.phone.replace(/[^\d+]/g, '')}`}
+              className="inline-flex items-center gap-2 font-semibold text-brand-700"
+            >
+              <Phone className="w-4 h-4" />
+              <span>Call Us: {companyInfo.contact.phone}</span>
+            </a>
+            <a
+              href={websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-semibold text-brand-700"
+            >
+              <Globe className="w-4 h-4" />
+              <span>Visit: {websiteLabel}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
       {/* Mobile-First Carousel Section */}
       <section className="relative w-full overflow-hidden bg-gradient-to-br from-gray-50 to-white mt-4 sm:mt-8 md:mt-12 lg:mt-16">
         {/* Background decoration - only on larger screens */}

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Youtube } from 'lucide-react';
 import { companyInfo } from '../data/company';
 import logo from '../assets/logo.png';
 
@@ -97,15 +97,6 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4">Follow Us</h4>
             <div className="flex space-x-3">
               <a
-                href={companyInfo.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-800 rounded-lg hover:bg-brand-600 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-5 h-5" />
-              </a>
-              <a
                 href={companyInfo.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -115,22 +106,13 @@ export default function Footer() {
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href={companyInfo.social.linkedin}
+                href={companyInfo.social.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 bg-gray-800 rounded-lg hover:bg-brand-600 transition-colors"
-                aria-label="LinkedIn"
+                aria-label="YouTube"
               >
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a
-                href={companyInfo.social.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 bg-gray-800 rounded-lg hover:bg-brand-600 transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5" />
+                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>

@@ -115,7 +115,7 @@ export const products = [
     id: 8,
     name: "Pure Chana Dal Besan",
     category: "Besan",
-    size: "1 kg",
+    size: "40 kg",
     packaging: "Pouch",
     description: "Premium quality gram flour in family pack size.",
     image: besanImg,

@@ -16,7 +16,8 @@ export const companyInfo = {
   },
   social: {
     facebook: 'https://facebook.com/samayshriagro',
-    instagram: 'https://instagram.com/samayshriagro',
+    instagram: 'https://www.instagram.com/samayshriagro/',
+    youtube: 'https://www.youtube.com/@Samayshri',
     linkedin: 'https://linkedin.com/company/samayshriagro',
     twitter: 'https://twitter.com/samayshriagro',
   },
