@@ -117,7 +117,7 @@ export default function Home1() {
 
   return (
     <div>
-      <div className="container-custom pt-4">
+      {/* <div className="container-custom pt-4">
         <div className="rounded-xl border border-brand-200 bg-gradient-to-r from-brand-50 via-amber-50 to-brand-50 px-4 py-3 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm">
             <a
@@ -138,7 +138,7 @@ export default function Home1() {
             </a>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Mobile-First Carousel Section */}
       <section className="relative w-full overflow-hidden bg-gradient-to-br from-gray-50 to-white mt-4 sm:mt-8 md:mt-12 lg:mt-16">
@@ -201,26 +201,26 @@ export default function Home1() {
                       className="space-y-3 sm:space-y-4 text-center sm:text-left"
                     >
                       {/* Tag */}
-                      <span className="inline-block px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-xs sm:text-sm font-semibold">
+                      <span className="inline-block px-3 py-1.5 bg-brand-100 text-brand-700 rounded-full text-sm sm:text-sm font-semibold">
                         {carouselData[currentSlide].subtitleHindi} • {carouselData[currentSlide].subtitle}
                       </span>
 
                       {/* Title */}
                       <div>
-                        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+                        <h1 className="text-2xl sm:text-2xl font-bold text-gray-900 leading-snug">
                           {carouselData[currentSlide].titleHindi}
                         </h1>
-                        <h2 className="text-base sm:text-lg font-semibold text-brand-600 leading-snug">
+                        <h2 className="text-lg sm:text-lg font-semibold text-brand-600 leading-snug">
                           {carouselData[currentSlide].title}
                         </h2>
                       </div>
 
                       {/* Description */}
                       <div className="space-y-2 pt-1">
-                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
+                        <p className="text-sm sm:text-sm text-gray-700 leading-relaxed">
                           {carouselData[currentSlide].descriptionHindi}
                         </p>
-                        <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                        <p className="text-sm sm:text-sm text-gray-600 leading-relaxed">
                           {carouselData[currentSlide].description}
                         </p>
                       </div>
@@ -234,9 +234,9 @@ export default function Home1() {
                           >
                             <div className="flex items-center space-x-1.5 w-full mb-1">
                               <div className="w-1 h-1 bg-brand-600 rounded-full flex-shrink-0"></div>
-                              <span className="text-gray-800 font-semibold text-xs leading-tight line-clamp-1">{highlight}</span>
+                              <span className="text-gray-800 font-semibold text-sm leading-tight line-clamp-1">{highlight}</span>
                             </div>
-                            <span className="text-gray-600 text-xs ml-2 leading-tight line-clamp-1">{carouselData[currentSlide].highlights[index]}</span>
+                            <span className="text-gray-600 text-sm ml-2 leading-tight line-clamp-1">{carouselData[currentSlide].highlights[index]}</span>
                           </div>
                         ))}
                       </div>

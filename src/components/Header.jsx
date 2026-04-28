@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Globe, Menu, Phone, X } from 'lucide-react';
+import { Mail, Menu, Phone, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '../assets/logo.png';
 import { companyInfo } from '../data/company';
@@ -20,8 +20,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const websiteUrl = 'https://www.samayshri.com';
-  const websiteLabel = 'www.samayshri.com';
+  const contactEmail = 'sarthak@samayshri.com';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,12 +38,12 @@ export default function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'bg-white shadow-lg py-3'
-          : 'bg-white/95 backdrop-blur-sm py-4'
+          ? 'bg-white shadow-lg'
+          : 'bg-white/95 backdrop-blur-sm'
       }`}
     >
-      <div className="hidden md:block border-b border-gray-200 bg-brand-50">
-        <div className="container-custom py-2 flex items-center justify-end gap-4 text-xs sm:text-sm">
+      <div className="border-b border-gray-200 bg-brand-50">
+        <div className="container-custom flex items-center justify-between gap-2 py-2 text-[15px] sm:justify-end sm:gap-4 sm:text-sm">
           <a
             href={`tel:${companyInfo.contact.phone.replace(/[^\d+]/g, '')}`}
             className="inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-800 transition-colors"
@@ -53,17 +52,15 @@ export default function Header() {
             <span>{companyInfo.contact.phone}</span>
           </a>
           <a
-            href={websiteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`mailto:${contactEmail}`}
             className="inline-flex items-center gap-2 font-semibold text-brand-700 hover:text-brand-800 transition-colors"
           >
-            <Globe className="w-4 h-4" />
-            <span>{websiteLabel}</span>
+            <Mail className="w-4 h-4" />
+            <span>{contactEmail}</span>
           </a>
         </div>
       </div>
-      <nav className="container-custom">
+      <nav className="container-custom py-3 md:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center group">
@@ -116,24 +113,6 @@ export default function Header() {
               className="md:hidden overflow-hidden"
             >
               <div className="py-4 space-y-1">
-                <div className="mx-2 mb-3 rounded-lg border border-brand-100 bg-brand-50 px-4 py-3 space-y-2">
-                  <a
-                    href={`tel:${companyInfo.contact.phone.replace(/[^\d+]/g, '')}`}
-                    className="flex items-center gap-2 text-sm font-semibold text-brand-700"
-                  >
-                    <Phone className="w-4 h-4" />
-                    <span>{companyInfo.contact.phone}</span>
-                  </a>
-                  <a
-                    href={websiteUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm font-semibold text-brand-700"
-                  >
-                    <Globe className="w-4 h-4" />
-                    <span>{websiteLabel}</span>
-                  </a>
-                </div>
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
