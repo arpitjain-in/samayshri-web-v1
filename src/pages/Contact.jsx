@@ -75,7 +75,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="pt-16">
+    <div className="pt-24">
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div className="container-custom">
