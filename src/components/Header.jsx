@@ -13,6 +13,7 @@ const navigation = [
   { name: 'Products', href: '/products' },
   { name: 'Team', href: '/team' },
   { name: 'Gallery', href: '/gallery' },
+  { name: 'Download Company Profile', href: '/company-profile.pdf', external: true, download: true },
   { name: 'Contact', href: '/contact' },
 ];
 
@@ -21,6 +22,8 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const contactEmail = 'sarthak@samayshri.com';
+  const ctaNavItem = navigation.find((item) => item.name === 'Download Company Profile');
+  const mainNavItems = navigation.filter((item) => item.name !== 'Download Company Profile');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,20 +75,44 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  location.pathname === item.href
-                    ? 'bg-brand-600 text-white'
-                    : 'text-gray-700 hover:bg-gray-100'
-                }`}
+          <div className="hidden md:flex items-center gap-3 ml-auto">
+            <div className="flex items-center space-x-1">
+              {mainNavItems.map((item) => {
+                const isExternal = item.external || item.href.endsWith('.pdf');
+                const isActive = !isExternal && location.pathname === item.href;
+                const linkClasses = `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  isActive ? 'bg-brand-600 text-white' : 'text-gray-700 hover:bg-gray-100'
+                }`;
+
+                return isExternal ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={linkClasses}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={item.download}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link key={item.name} to={item.href} className={linkClasses}>
+                    {item.name}
+                  </Link>
+                );
+              })}
+            </div>
+            {ctaNavItem && (
+              <a
+                href={ctaNavItem.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                download={ctaNavItem.download}
+                className="inline-flex items-center rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-brand-500/20 transition hover:bg-brand-700"
               >
-                {item.name}
-              </Link>
-            ))}
+                {ctaNavItem.name}
+              </a>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -113,19 +140,41 @@ export default function Header() {
               className="md:hidden overflow-hidden"
             >
               <div className="py-4 space-y-1">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
-                      location.pathname === item.href
-                        ? 'bg-brand-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
+                {mainNavItems.map((item) => {
+                  const isExternal = item.external || item.href.endsWith('.pdf');
+                  const isActive = !isExternal && location.pathname === item.href;
+                  const linkClasses = `block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                    isActive ? 'bg-brand-600 text-white' : 'text-gray-700 hover:bg-gray-100'
+                  }`;
+
+                  return isExternal ? (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className={linkClasses}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download={item.download}
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <Link key={item.name} to={item.href} className={linkClasses}>
+                      {item.name}
+                    </Link>
+                  );
+                })}
+                {ctaNavItem && (
+                  <a
+                    href={ctaNavItem.href}
+                    className="block rounded-full bg-brand-600 px-4 py-3 text-base font-semibold text-white shadow-lg shadow-brand-500/20 transition hover:bg-brand-700"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={ctaNavItem.download}
                   >
-                    {item.name}
-                  </Link>
-                ))}
+                    {ctaNavItem.name}
+                  </a>
+                )}
               </div>
             </motion.div>
           )}

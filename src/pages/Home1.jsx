@@ -303,7 +303,7 @@ export default function Home1() {
                       transition={{ duration: 0.4, delay: 0.1 }}
                       className="flex justify-center items-center order-1 lg:order-2"
                     >
-                      <div className="relative w-full max-w-md xl:max-w-lg aspect-square">
+                      <div className="relative w-full max-w-md xl:max-w-lg aspect-square min-h-[24rem]">
                         <div className="w-full h-full animate-colorful-border bg-gradient-to-r from-brand-600 via-brand-400 to-brand-600 rounded-2xl p-1.5 shadow-2xl">
                           <div className="w-full h-full bg-white rounded-[15px] overflow-hidden flex items-center justify-center p-6 bg-gradient-to-br from-gray-50 to-gray-100">
                             <img

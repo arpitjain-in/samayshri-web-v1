@@ -67,6 +67,15 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <a
+                  href="/company-profile.pdf"
+                  download="Company_Profile.pdf"
+                  className="hover:text-brand-500 transition-colors"
+                >
+                  Company Profile
+                </a>
+              </li>
+              <li>
                 <Link to="/contact" className="hover:text-brand-500 transition-colors">
                   Contact
                 </Link>
