@@ -68,7 +68,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="/company-profile.pdf"
+                  href="/samayshri-company-profile.pdf"
                   download="Company_Profile.pdf"
                   className="hover:text-brand-500 transition-colors"
                 >

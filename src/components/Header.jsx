@@ -13,7 +13,7 @@ const navigation = [
   { name: 'Products', href: '/products' },
   { name: 'Team', href: '/team' },
   { name: 'Gallery', href: '/gallery' },
-  { name: 'Download Company Profile', href: '/company-profile.pdf', external: true, download: true },
+  { name: 'Download Company Profile', href: '/samayshri-company-profile.pdf', external: true, download: true },
   { name: 'Contact', href: '/contact' },
 ];
 
