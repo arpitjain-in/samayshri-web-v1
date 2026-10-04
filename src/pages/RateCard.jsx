@@ -2,7 +2,17 @@ import { useEffect, useState } from 'react';
 import { Phone, MessageCircle, Share2 } from 'lucide-react';
 import { rateCard } from '../data/rates';
 
-const formatRupees = (amount) => `₹${amount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+const formatPerKg = (amount) =>
+  `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+// Whole rupees show without decimals; anything else shows paise.
+const formatPackPrice = (amount) => {
+  const rounded = Math.round(amount * 100) / 100;
+  return `₹${rounded.toLocaleString('en-IN', {
+    minimumFractionDigits: Number.isInteger(rounded) ? 0 : 2,
+    maximumFractionDigits: 2,
+  })}`;
+};
 
 const formatDate = (isoDate) =>
   new Date(`${isoDate}T00:00:00`).toLocaleDateString('en-IN', {
@@ -106,8 +116,13 @@ const RateCard = () => {
                       </p>
                     </div>
                     <div className="shrink-0 text-right tabular-nums">
-                      <p className="text-xl font-bold leading-tight text-brand-700">{formatRupees(item.rate)}</p>
-                      <p className="text-xs text-earth-600">{formatRupees(item.rate / item.weightKg)}/kg</p>
+                      <p className="text-xl font-bold leading-tight text-brand-700">
+                        {formatPerKg(item.ratePerKg)}
+                        <span className="text-sm font-semibold">/kg</span>
+                      </p>
+                      <p className="text-xs text-earth-600">
+                        {item.pack.hi} {formatPackPrice(item.ratePerKg * item.weightKg)}
+                      </p>
                     </div>
                   </li>
                 ))}
