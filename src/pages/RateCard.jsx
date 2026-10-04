@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Phone, MessageCircle, Share2 } from 'lucide-react';
-import { rateCard } from '../data/rates';
+import { fetchRateCard } from '../utils/rateCardStore';
 
 const formatPerKg = (amount) =>
   `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -22,12 +22,28 @@ const formatDate = (isoDate) =>
   });
 
 const RateCard = () => {
+  const [rateCard, setRateCard] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
   const canShare = typeof navigator !== 'undefined' && !!navigator.share;
 
   useEffect(() => {
     document.title = 'रेट कार्ड | Rate Card - Samayshri Agro';
+    let cancelled = false;
+    fetchRateCard().then((card) => {
+      if (!cancelled) setRateCard(card);
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  if (!rateCard) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-earth-50" role="status" aria-label="Loading rates">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-brand-200 border-t-brand-600" />
+      </div>
+    );
+  }
 
   const visibleCategories =
     activeCategory === 'all'
@@ -104,9 +120,9 @@ const RateCard = () => {
               </div>
 
               <ul className="divide-y divide-earth-100">
-                {category.items.map((item) => (
+                {category.items.map((item, index) => (
                   <li
-                    key={`${item.size}-${item.pack.en}`}
+                    key={index}
                     className="flex items-center justify-between gap-3 px-4 py-3"
                   >
                     <div className="min-w-0">
@@ -131,8 +147,8 @@ const RateCard = () => {
           ))}
 
           <ul className="space-y-2 px-1 text-sm text-earth-700">
-            {rateCard.notes.map((note) => (
-              <li key={note.en}>
+            {rateCard.notes.map((note, index) => (
+              <li key={index}>
                 <span className="block text-gray-900">{note.hi}</span>
                 <span className="block">{note.en}</span>
               </li>
