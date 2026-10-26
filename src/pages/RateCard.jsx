@@ -21,6 +21,15 @@ const formatDate = (isoDate) =>
     year: 'numeric',
   });
 
+const formatDateTime = (isoTimestamp) =>
+  new Date(isoTimestamp).toLocaleString('en-IN', {
+    day: 'numeric',
+    month: 'short',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZone: 'Asia/Kolkata',
+  });
+
 const RateCard = () => {
   const [rateCard, setRateCard] = useState(null);
   const [activeCategory, setActiveCategory] = useState('all');
@@ -110,6 +119,11 @@ const RateCard = () => {
           <p className="text-sm text-earth-700">
             लागू दिनांक · Effective from{' '}
             <span className="font-semibold text-gray-900">{formatDate(rateCard.effectiveDate)}</span>
+            {rateCard.updatedAt && (
+              <span className="block text-xs">
+                अपडेट · Updated {formatDateTime(rateCard.updatedAt)}
+              </span>
+            )}
           </p>
 
           {visibleCategories.map((category) => (

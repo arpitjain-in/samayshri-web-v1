@@ -4,6 +4,8 @@ import { rateCard as defaultRateCard } from '../data/rates';
 // It is read over plain REST so the public page doesn't need to load the Firebase SDK.
 export const RATE_CARD_COLLECTION = 'rateCard';
 export const RATE_CARD_DOC = 'current';
+// Every save also adds a permanent copy here, so past rates can be looked up.
+export const RATE_HISTORY_COLLECTION = 'rateHistory';
 
 const DOC_URL = `https://firestore.googleapis.com/v1/projects/${
   import.meta.env.VITE_FIREBASE_PROJECT_ID
@@ -19,7 +21,11 @@ export const fetchRateCard = async () => {
     const response = await fetch(DOC_URL, { signal: controller.signal, cache: 'no-store' });
     if (!response.ok) throw new Error(`Rate card request failed: ${response.status}`);
     const document = await response.json();
-    return { ...defaultRateCard, ...JSON.parse(document.fields.json.stringValue) };
+    return {
+      ...defaultRateCard,
+      ...JSON.parse(document.fields.json.stringValue),
+      updatedAt: document.fields.updatedAt?.timestampValue ?? null,
+    };
   } catch (error) {
     console.warn('Using bundled rates:', error.message);
     return defaultRateCard;

@@ -17,14 +17,29 @@ service cloud.firestore {
       allow read, update, delete: if false;
     }
     
-    // Rate card shown on rates.samayshri.com - anyone can read, only admins can save
+    // Google accounts allowed to edit the rate card on rates.samayshri.com/admin
+    function isRateAdmin() {
+      return request.auth != null
+          && request.auth.token.email_verified == true
+          && request.auth.token.email in ['samayshriagro@gmail.com'];
+    }
+    
+    // Current rate card - anyone can read, only admins can save
     match /rateCard/{docId} {
       allow read: if true;
-      allow create, update: if request.auth != null
-                            && request.auth.token.email_verified == true
-                            && request.auth.token.email in ['samayshriagro@gmail.com']
+      allow create, update: if isRateAdmin()
                             && request.resource.data.json is string
                             && request.resource.data.json.size() < 100000;
+    }
+    
+    // Every saved version of the rate card - admins only, and entries can never be changed or deleted
+    match /rateHistory/{entryId} {
+      allow read: if isRateAdmin();
+      allow create: if isRateAdmin()
+                    && request.resource.data.json is string
+                    && request.resource.data.json.size() < 100000
+                    && request.resource.data.savedBy == request.auth.token.email
+                    && request.resource.data.savedAt == request.time;
     }
     
     // Block all other collections by default

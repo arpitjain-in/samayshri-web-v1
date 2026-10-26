@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
-import { doc, serverTimestamp, setDoc } from 'firebase/firestore';
+import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore';
 import { LogOut, Plus, Trash2 } from 'lucide-react';
 import app, { db } from '../firebase';
-import { fetchRateCard, parseWeightKg, RATE_CARD_COLLECTION, RATE_CARD_DOC } from '../utils/rateCardStore';
+import RateHistory from '../components/RateHistory';
+import {
+  fetchRateCard,
+  parseWeightKg,
+  RATE_CARD_COLLECTION,
+  RATE_CARD_DOC,
+  RATE_HISTORY_COLLECTION,
+} from '../utils/rateCardStore';
 
 const auth = getAuth(app);
 
@@ -79,6 +86,7 @@ const RateAdmin = () => {
   const [form, setForm] = useState(null);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState(null); // { type: 'success' | 'error', text }
+  const [tab, setTab] = useState('edit'); // 'edit' | 'history'
 
   const rateCardUrl = window.location.pathname.startsWith('/rates') ? '/rates' : '/';
 
@@ -127,11 +135,20 @@ const RateAdmin = () => {
     setSaving(true);
     setStatus(null);
     try {
-      await setDoc(doc(db, RATE_CARD_COLLECTION, RATE_CARD_DOC), {
-        json: JSON.stringify(card),
+      // The live rate card and its history entry are written together, so neither is saved without the other.
+      const json = JSON.stringify(card);
+      const batch = writeBatch(db);
+      batch.set(doc(db, RATE_CARD_COLLECTION, RATE_CARD_DOC), {
+        json,
         updatedAt: serverTimestamp(),
         updatedBy: user.email,
       });
+      batch.set(doc(collection(db, RATE_HISTORY_COLLECTION)), {
+        json,
+        savedAt: serverTimestamp(),
+        savedBy: user.email,
+      });
+      await batch.commit();
       setStatus({ type: 'success', text: 'Saved. The rate card is updated.' });
     } catch (saveError) {
       setStatus({
@@ -144,6 +161,13 @@ const RateAdmin = () => {
     } finally {
       setSaving(false);
     }
+  };
+
+  const handleRestore = (card, savedAtLabel) => {
+    setForm(toForm(card));
+    setTab('edit');
+    setStatus({ type: 'success', text: `Loaded rates from ${savedAtLabel}. Tap Save rates to publish them.` });
+    window.scrollTo(0, 0);
   };
 
   const statusMessage = status && (
@@ -206,6 +230,30 @@ const RateAdmin = () => {
           </button>
         </header>
 
+        <nav className="flex gap-2 px-4 pt-4" aria-label="Admin sections">
+          {[
+            { id: 'edit', label: 'Edit rates' },
+            { id: 'history', label: 'History' },
+          ].map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => setTab(option.id)}
+              aria-pressed={tab === option.id}
+              className={`min-h-[44px] flex-1 rounded-lg text-sm font-semibold ${
+                tab === option.id
+                  ? 'bg-brand-600 text-white'
+                  : 'border border-earth-200 bg-white text-earth-700 active:bg-earth-100'
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </nav>
+
+        {tab === 'history' ? (
+          <RateHistory onRestore={handleRestore} />
+        ) : (
         <main className="space-y-4 px-4 pt-4">
           <Field
             label="Effective date"
@@ -341,8 +389,10 @@ const RateAdmin = () => {
             </button>
           </section>
         </main>
+        )}
       </div>
 
+      {tab === 'edit' && (
       <div className="fixed inset-x-0 bottom-0 z-10 border-t border-earth-100 bg-white pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_8px_rgba(0,0,0,0.08)]">
         <div className="mx-auto max-w-lg space-y-2 px-4 py-3">
           {statusMessage}
@@ -364,6 +414,7 @@ const RateAdmin = () => {
           </div>
         </div>
       </div>
+      )}
     </div>
   );
 };
