@@ -1,33 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Phone, MessageCircle, Share2 } from 'lucide-react';
-import { fetchRateCard } from '../utils/rateCardStore';
-
-const formatPerKg = (amount) =>
-  `₹${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-
-// Whole rupees show without decimals; anything else shows paise.
-const formatPackPrice = (amount) => {
-  const rounded = Math.round(amount * 100) / 100;
-  return `₹${rounded.toLocaleString('en-IN', {
-    minimumFractionDigits: Number.isInteger(rounded) ? 0 : 2,
-    maximumFractionDigits: 2,
-  })}`;
-};
+import RateList from '../components/RateList';
+import VersionPicker from '../components/VersionPicker';
+import { fetchRateCard, formatDay, formatTime, toIstDay } from '../utils/rateCardStore';
 
 const formatDate = (isoDate) =>
   new Date(`${isoDate}T00:00:00`).toLocaleDateString('en-IN', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
-  });
-
-const formatDateTime = (isoTimestamp) =>
-  new Date(isoTimestamp).toLocaleString('en-IN', {
-    day: 'numeric',
-    month: 'short',
-    hour: 'numeric',
-    minute: '2-digit',
-    timeZone: 'Asia/Kolkata',
   });
 
 const RateCard = () => {
@@ -58,6 +39,13 @@ const RateCard = () => {
     activeCategory === 'all'
       ? rateCard.categories
       : rateCard.categories.filter((category) => category.id === activeCategory);
+
+  // Rates saved before versions existed have no day or version, so fall back to the save time.
+  const updatedAt = rateCard.updatedAt ? new Date(rateCard.updatedAt) : null;
+  const currentDay = rateCard.day ?? (updatedAt ? toIstDay(updatedAt) : rateCard.effectiveDate);
+  const versionLabel = [rateCard.version ? `v${rateCard.version}` : null, updatedAt ? formatTime(updatedAt) : null]
+    .filter(Boolean)
+    .join(' · ');
 
   const whatsappUrl = `https://wa.me/${rateCard.whatsapp}?text=${encodeURIComponent(
     'नमस्ते, मुझे रेट कार्ड के बारे में जानकारी चाहिए।'
@@ -116,49 +104,20 @@ const RateCard = () => {
             </p>
           )}
 
+          <VersionPicker
+            disabled
+            days={[{ value: currentDay, label: formatDay(currentDay) }]}
+            versions={[{ value: rateCard.version ?? 0, label: versionLabel || '—' }]}
+            day={currentDay}
+            version={rateCard.version ?? 0}
+          />
+
           <p className="text-sm text-earth-700">
             लागू दिनांक · Effective from{' '}
             <span className="font-semibold text-gray-900">{formatDate(rateCard.effectiveDate)}</span>
-            {rateCard.updatedAt && (
-              <span className="block text-xs">
-                अपडेट · Updated {formatDateTime(rateCard.updatedAt)}
-              </span>
-            )}
           </p>
 
-          {visibleCategories.map((category) => (
-            <section key={category.id} className="overflow-hidden rounded-xl border border-earth-100 bg-white shadow-sm">
-              <div className="border-b border-brand-100 bg-brand-50 px-4 py-3">
-                <h2 className="text-lg font-bold leading-tight text-gray-900">{category.name.hi}</h2>
-                <p className="text-sm text-earth-700">{category.name.en}</p>
-              </div>
-
-              <ul className="divide-y divide-earth-100">
-                {category.items.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center justify-between gap-3 px-4 py-3"
-                  >
-                    <div className="min-w-0">
-                      <p className="text-lg font-bold leading-tight text-gray-900">{item.size}</p>
-                      <p className="text-sm text-earth-700">
-                        {item.pack.hi} · {item.pack.en}
-                      </p>
-                    </div>
-                    <div className="shrink-0 text-right tabular-nums">
-                      <p className="text-xl font-bold leading-tight text-brand-700">
-                        {formatPerKg(item.ratePerKg)}
-                        <span className="text-sm font-semibold">/kg</span>
-                      </p>
-                      <p className="text-xs text-earth-600">
-                        {item.pack.hi} {formatPackPrice(item.ratePerKg * item.weightKg)}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
+          <RateList categories={visibleCategories} />
 
           <ul className="space-y-2 px-1 text-sm text-earth-700">
             {rateCard.notes.map((note, index) => (

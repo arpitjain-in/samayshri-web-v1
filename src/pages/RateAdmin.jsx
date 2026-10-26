@@ -1,15 +1,19 @@
 import { useEffect, useState } from 'react';
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
-import { collection, doc, serverTimestamp, writeBatch } from 'firebase/firestore';
+import { collection, doc, runTransaction, serverTimestamp } from 'firebase/firestore';
 import { LogOut, Plus, Trash2 } from 'lucide-react';
 import app, { db } from '../firebase';
 import RateHistory from '../components/RateHistory';
 import {
   fetchRateCard,
+  formatDay,
   parseWeightKg,
   RATE_CARD_COLLECTION,
   RATE_CARD_DOC,
   RATE_HISTORY_COLLECTION,
+  RATE_HISTORY_META_COLLECTION,
+  RATE_HISTORY_META_DOC,
+  toIstDay,
 } from '../utils/rateCardStore';
 
 const auth = getAuth(app);
@@ -135,21 +139,33 @@ const RateAdmin = () => {
     setSaving(true);
     setStatus(null);
     try {
-      // The live rate card and its history entry are written together, so neither is saved without the other.
+      // The live rate card, its history entry and the per-day version count are written in one
+      // transaction, so two saves at the same moment can't get the same version number.
       const json = JSON.stringify(card);
-      const batch = writeBatch(db);
-      batch.set(doc(db, RATE_CARD_COLLECTION, RATE_CARD_DOC), {
-        json,
-        updatedAt: serverTimestamp(),
-        updatedBy: user.email,
+      const day = toIstDay(new Date());
+      const metaRef = doc(db, RATE_HISTORY_META_COLLECTION, RATE_HISTORY_META_DOC);
+      const version = await runTransaction(db, async (transaction) => {
+        const meta = await transaction.get(metaRef);
+        const counts = meta.exists() ? meta.data().counts : {};
+        const nextVersion = (counts[day] ?? 0) + 1;
+        transaction.set(doc(db, RATE_CARD_COLLECTION, RATE_CARD_DOC), {
+          json,
+          updatedAt: serverTimestamp(),
+          updatedBy: user.email,
+          day,
+          version: nextVersion,
+        });
+        transaction.set(doc(collection(db, RATE_HISTORY_COLLECTION)), {
+          json,
+          savedAt: serverTimestamp(),
+          savedBy: user.email,
+          day,
+          version: nextVersion,
+        });
+        transaction.set(metaRef, { counts: { ...counts, [day]: nextVersion } });
+        return nextVersion;
       });
-      batch.set(doc(collection(db, RATE_HISTORY_COLLECTION)), {
-        json,
-        savedAt: serverTimestamp(),
-        savedBy: user.email,
-      });
-      await batch.commit();
-      setStatus({ type: 'success', text: 'Saved. The rate card is updated.' });
+      setStatus({ type: 'success', text: `Saved as ${formatDay(day)} v${version}. The rate card is updated.` });
     } catch (saveError) {
       setStatus({
         type: 'error',

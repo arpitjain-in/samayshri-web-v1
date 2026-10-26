@@ -39,7 +39,14 @@ service cloud.firestore {
                     && request.resource.data.json is string
                     && request.resource.data.json.size() < 100000
                     && request.resource.data.savedBy == request.auth.token.email
-                    && request.resource.data.savedAt == request.time;
+                    && request.resource.data.savedAt == request.time
+                    && request.resource.data.day is string
+                    && request.resource.data.version is int;
+    }
+    
+    // Number of versions saved on each day, used to number the next version - admins only
+    match /rateHistoryMeta/{docId} {
+      allow read, create, update: if isRateAdmin();
     }
     
     // Block all other collections by default
